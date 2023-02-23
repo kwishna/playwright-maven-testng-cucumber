@@ -2,3 +2,10 @@ ExtentReports.zip
 .idea
 target/
 *.log
+!/output_data/downloads/.gitkeep
+!/output_data/extent-reports/.gitkeep
+!/output_data/har_path/.gitkeep
+!/output_data/screenshots/.gitkeep
+!/output_data/traces/.gitkeep
+!/output_data/videos/.gitkeep
+/output_data/

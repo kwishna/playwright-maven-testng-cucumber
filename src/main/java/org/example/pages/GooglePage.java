@@ -22,17 +22,16 @@ public class GooglePage extends BasePage {
 
     public void navigate() {
         logger.info("Navigating To Google GooglePage");
-        this.goTo("https://google.com/");
+        this.navigateTo("https://google.com/");
     }
 
     public boolean isSearchPageOpen() {
         logger.info("Wait For Successful Navigation To Google Search Page.");
-        return this.isDisplayed(searchBox);
+        return this.isVisible(searchBox);
     }
 
     public void performSearch(final String keyword) {
-        this.clear(searchBox);
-        this.sendKeys(searchBox, keyword);
+        this.clearAndSendKeys(searchBox, keyword);
         this.sendKeyboardKeys(searchBox, Keys.ENTER);
     }
 

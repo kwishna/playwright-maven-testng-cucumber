@@ -118,6 +118,21 @@
             <artifactId>playwright</artifactId>
             <version>1.30.0</version>
         </dependency>
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>1.0.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.0-RC1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -136,6 +151,9 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M7</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>
+                    </systemPropertyVariables>
                     <systemPropertiesFile>${project.basedir}/config.properties</systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
@@ -143,6 +161,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+
                 </configuration>
                 <executions>
                     <execution>

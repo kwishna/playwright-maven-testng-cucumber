@@ -8,33 +8,32 @@ import java.util.Objects;
 
 public final class PageManager {
     private static final ThreadLocal<Page> PAGE_THREAD_LOCAL = ThreadLocal.withInitial(() -> null);
-    private static final Logger logger = LogManager.getLogger(PageManager.class);
+    private static final Logger LOGGER = LogManager.getLogger(PageManager.class);
 
     private PageManager() {
     }
 
-    public static Page getPage() {
+    static Page getPage() {
         if (Objects.isNull(PAGE_THREAD_LOCAL.get())) {
-            logger.info("Creating a new driver.");
+            LOGGER.info("Creating a new driver.");
             Page _driver = BrowserContextManager.getBrowserContext().newPage();
-            setDriver(_driver);
+            setPage(_driver);
         }
         return PAGE_THREAD_LOCAL.get();
     }
 
-    public static void setDriver(Page driver) {
-        PAGE_THREAD_LOCAL.set(driver);
+    private static void setPage(Page page) {
+        PAGE_THREAD_LOCAL.set(page);
     }
 
-    public static void quit() {
+    static void quit() {
         if (Objects.nonNull(PAGE_THREAD_LOCAL.get())) {
             try {
-                logger.info("Closing the driver.");
+                LOGGER.info("Closing the driver.");
                 PAGE_THREAD_LOCAL.get().close(new Page.CloseOptions().setRunBeforeUnload(false));
                 PAGE_THREAD_LOCAL.remove();
             } catch (Exception err) {
-                logger.error("Error while closing the driver: " + err);
-                System.err.println(err.getMessage());
+                LOGGER.error("Error while closing the driver: " + err);
             }
         }
     }

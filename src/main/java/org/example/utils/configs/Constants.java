@@ -1,4 +1,6 @@
-package org.example.utils;
+package org.example.utils.configs;
+
+import java.io.File;
 
 public interface Constants {
     String PROJECT_PATH = System.getProperty("user.dir");
@@ -26,7 +28,6 @@ public interface Constants {
     String YES = "yes";
     String NO = "no";
     int WAIT_TIMEOUT = Integer.parseInt(System.getProperty("TIMEOUT_WAIT", "30000"));
-    String EXTENT_REPORT_FOLDER_PATH = PROJECT_PATH + "/outputs/";
     String EXTENT_REPORT_NAME = "ExtentReport.html";
     String ZIPPED_EXTENT_REPORTS_FOLDER_NAME = "ExtentReports.zip";
     String PROJECT_NAME = System.getProperty("PROJECT_NAME", "PROJECT_NAME");
@@ -36,12 +37,16 @@ public interface Constants {
     boolean SEND_MAIL = Boolean.parseBoolean(System.getProperty("SEND_MAIL", "false"));
     boolean RECORD_VIDEO = Boolean.parseBoolean(System.getProperty("RECORD_VIDEO", "false"));
     boolean PERSISTENT_LOGIN = Boolean.parseBoolean(System.getProperty("PERSISTENT_LOGIN", "false"));
+    boolean BROWSER_EXECUTABLE = Boolean.parseBoolean(System.getProperty("BROWSER_EXECUTABLE", "false"));
     String BASE_URL = System.getProperty("BASE_URL", "https://google.com/");
-    String DOWNLOAD_PATH = System.getProperty("DOWNLOAD_PATH", PROJECT_PATH + "/downloads");
-    String SCREENSHOT_PATH = System.getProperty("SCREENSHOT_PATH", PROJECT_PATH + "/screenshots");
-    String TRACE_DIR = System.getProperty("TRACE_DIR", PROJECT_PATH + "/traces");
-    String HAR_PATH = System.getProperty("HAR_PATH", PROJECT_PATH + "/har_path");
-    String VIDEO_DIR = System.getProperty("VIDEO_DIR", PROJECT_PATH + "/videos");
-    String PERSISTENT_DIR = System.getProperty("PERSISTENT_DIR", PROJECT_PATH + "/persistent_data");
+    String OUTPUT_FOLDER = "output_data";
+    String EXTENT_REPORT_FOLDER_PATH = PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "extent-reports";
+    String DOWNLOAD_PATH = System.getProperty("DOWNLOAD_PATH", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "downloads");
+    String SCREENSHOT_PATH = System.getProperty("SCREENSHOT_PATH", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "screenshots");
+    String TRACE_DIR = System.getProperty("TRACE_DIR", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "traces");
+    String HAR_PATH = System.getProperty("HAR_PATH", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "har_path");
+    String VIDEO_DIR = System.getProperty("VIDEO_DIR", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "videos");
+    String PERSISTENT_DIR = System.getProperty("PERSISTENT_DIR", PROJECT_PATH + File.separator + "persistent_data");
+    String EXECUTABLE_PATH = System.getProperty("EXECUTABLE_PATH");
 
 }

@@ -4,7 +4,7 @@ import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
 
-import static org.example.utils.Constants.*;
+import static org.example.utils.configs.Constants.*;
 
 
 public class ZipUtils {

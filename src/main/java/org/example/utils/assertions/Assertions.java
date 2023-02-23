@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.utils.assertions;
 
 import org.example.reportings.ExtentLogger;
 import org.hamcrest.Matcher;

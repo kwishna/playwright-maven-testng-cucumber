@@ -1,6 +1,7 @@
 package org.example.reportings;
 
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
@@ -9,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.example.utils.Constants.*;
+import static org.example.utils.configs.Constants.*;
 
 public final class ExtentReport {
 
@@ -23,7 +24,7 @@ public final class ExtentReport {
 
             EXTENT = new ExtentReports();
 
-            ExtentSparkReporter spark = new ExtentSparkReporter(EXTENT_REPORT_FOLDER_PATH + EXTENT_REPORT_NAME);
+            ExtentSparkReporter spark = new ExtentSparkReporter(EXTENT_REPORT_FOLDER_PATH + File.separator + EXTENT_REPORT_NAME);
             EXTENT.attachReporter(spark);
 
             spark.config().setTheme(Theme.STANDARD);
@@ -56,13 +57,24 @@ public final class ExtentReport {
         ExtentManager.setExtentTest(EXTENT.createTest(testCaseName));
     }
 
-    synchronized public static void addAuthors(String[] authors) {
+    public static void createTest(String testCaseName, String testCaseDescription) {
+        if (Objects.isNull(EXTENT)) {
+            initReports();
+        }
+        ExtentManager.setExtentTest(EXTENT.createTest(testCaseName, testCaseDescription));
+    }
+
+    public static ExtentTest getExtentTest() {
+        return ExtentManager.getExtentTest();
+    }
+
+    synchronized public static void addAuthors(String... authors) {
         for (String author : authors) {
             ExtentManager.getExtentTest().assignAuthor(author);
         }
     }
 
-    synchronized public static void addCategories(String[] categories) {
+    synchronized public static void addCategories(String... categories) {
         for (String category : categories) {
             ExtentManager.getExtentTest().assignCategory(category);
         }

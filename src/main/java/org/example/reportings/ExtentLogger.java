@@ -3,6 +3,10 @@ package org.example.reportings;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.markuputils.Markup;
 import org.example.utils.ScreenshotUtils;
+import org.testng.ITestResult;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public final class ExtentLogger {
 
@@ -94,5 +98,19 @@ public final class ExtentLogger {
 
     public static void info(String message, MediaEntityBuilder builder) {
         ExtentManager.getExtentTest().info(message, builder.build());
+    }
+
+    public static void setEndTime(ITestResult result) {
+        ExtentReport.getExtentTest().getModel().setEndTime(getTime(result.getStartMillis()));
+    }
+
+    public static void setStartTime(ITestResult result) {
+        ExtentReport.getExtentTest().getModel().setStartTime(getTime(result.getStartMillis()));
+    }
+
+    private static Date getTime(long millis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return calendar.getTime();
     }
 }

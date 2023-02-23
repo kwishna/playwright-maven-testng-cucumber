@@ -1,8 +1,9 @@
-package org.example.utils;
+package org.example.utils.emailing;
 
 import jakarta.mail.MessagingException;
+import org.example.utils.configs.Constants;
 
-import static org.example.utils.EmailConfig.*;
+import static org.example.utils.configs.EmailConfig.*;
 
 public class EmailSendUtils {
     public static void sendEmail(int count_totalTCs, int count_passedTCs, int count_failedTCs, int count_skippedTCs) {

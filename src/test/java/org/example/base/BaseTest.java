@@ -7,8 +7,8 @@ import com.microsoft.playwright.options.ScreenshotScale;
 import com.microsoft.playwright.options.ScreenshotType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.browserManager.PageManager;
-import org.example.utils.PropertyReader;
+import org.example.browserManager.DriverFactory;
+import org.example.utils.data.PropertyReader;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -21,8 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
-import static org.example.utils.Constants.SCREENSHOT_PATH;
-import static org.example.utils.Constants.WAIT_TIMEOUT;
+import static org.example.utils.configs.Constants.SCREENSHOT_PATH;
+import static org.example.utils.configs.Constants.WAIT_TIMEOUT;
 
 public class BaseTest {
 
@@ -33,7 +33,7 @@ public class BaseTest {
     }
 
     protected Page getPage() {
-        return PageManager.getPage();
+        return DriverFactory.getPage();
     }
 
     @Parameters("browser")
@@ -48,7 +48,7 @@ public class BaseTest {
     @AfterTest
     public synchronized void quitDriver(@Optional String browser) {
         logger.info("Quitting Driver");
-        PageManager.quit();
+        DriverFactory.quit();
     }
 
     private void takeScreenshotOnTestFailure(String browser, ITestResult result) throws IOException {

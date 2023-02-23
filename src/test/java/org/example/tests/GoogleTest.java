@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.base.BaseTest;
 import org.example.pages.GooglePage;
-import org.example.utils.Assertions;
+import org.example.utils.assertions.Assertions;
 import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
