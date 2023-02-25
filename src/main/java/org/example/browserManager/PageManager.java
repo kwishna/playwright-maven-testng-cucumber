@@ -3,6 +3,7 @@ package org.example.browserManager;
 import com.microsoft.playwright.Page;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.playwrightUtils.DialogHandler;
 
 import java.util.Objects;
 
@@ -18,11 +19,12 @@ public final class PageManager {
             LOGGER.info("Creating a new driver.");
             Page _driver = BrowserContextManager.getBrowserContext().newPage();
             setPage(_driver);
+            DialogHandler.registerDialogActionAlways();
         }
         return PAGE_THREAD_LOCAL.get();
     }
 
-    private static void setPage(Page page) {
+    public static void setPage(Page page) {
         PAGE_THREAD_LOCAL.set(page);
     }
 

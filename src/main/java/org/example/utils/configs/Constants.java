@@ -28,6 +28,8 @@ public interface Constants {
     String YES = "yes";
     String NO = "no";
     int WAIT_TIMEOUT = Integer.parseInt(System.getProperty("TIMEOUT_WAIT", "30000"));
+    int SCREEN_HEIGHT = Integer.parseInt(System.getProperty("SCREEN_HEIGHT", "1080"));
+    int SCREEN_WIDTH = Integer.parseInt(System.getProperty("SCREEN_WIDTH", "1920"));
     String EXTENT_REPORT_NAME = "ExtentReport.html";
     String ZIPPED_EXTENT_REPORTS_FOLDER_NAME = "ExtentReports.zip";
     String PROJECT_NAME = System.getProperty("PROJECT_NAME", "PROJECT_NAME");
@@ -37,7 +39,9 @@ public interface Constants {
     boolean SEND_MAIL = Boolean.parseBoolean(System.getProperty("SEND_MAIL", "false"));
     boolean RECORD_VIDEO = Boolean.parseBoolean(System.getProperty("RECORD_VIDEO", "false"));
     boolean PERSISTENT_LOGIN = Boolean.parseBoolean(System.getProperty("PERSISTENT_LOGIN", "false"));
+    boolean STORE_AUTHENTICATION = Boolean.parseBoolean(System.getProperty("STORE_AUTHENTICATION", "false"));
     boolean BROWSER_EXECUTABLE = Boolean.parseBoolean(System.getProperty("BROWSER_EXECUTABLE", "false"));
+    boolean ENABLE_TRACING = Boolean.parseBoolean(System.getProperty("ENABLE_TRACING", "true"));
     String BASE_URL = System.getProperty("BASE_URL", "https://google.com/");
     String OUTPUT_FOLDER = "output_data";
     String EXTENT_REPORT_FOLDER_PATH = PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "extent-reports";
@@ -48,5 +52,6 @@ public interface Constants {
     String VIDEO_DIR = System.getProperty("VIDEO_DIR", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "videos");
     String PERSISTENT_DIR = System.getProperty("PERSISTENT_DIR", PROJECT_PATH + File.separator + "persistent_data");
     String EXECUTABLE_PATH = System.getProperty("EXECUTABLE_PATH");
+    String PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = System.getProperty("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", "1");
 
 }

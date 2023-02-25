@@ -53,7 +53,7 @@ public class BrowserManager {
         }
     }
 
-    private static BrowserType _getBrowserTypeObj(String browserName) {
+    static BrowserType _getBrowserTypeObj(String browserName) {
         return switch (browserName.toLowerCase()) {
             case "chromium", "chrome" -> PlaywrightManager.getPlaywright().chromium();
             case "webkit", "safari" -> PlaywrightManager.getPlaywright().webkit();
@@ -65,7 +65,7 @@ public class BrowserManager {
     private static BrowserType.LaunchOptions _getLaunchOptions() {
 
         Map<String, String> _map = new HashMap<>();
-//        _map.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", "1");
+        _map.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD);
 
         return new BrowserType.LaunchOptions()
                 .setEnv(_map)

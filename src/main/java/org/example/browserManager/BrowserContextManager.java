@@ -2,6 +2,7 @@ package org.example.browserManager;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.options.ColorScheme;
 import com.microsoft.playwright.options.ForcedColors;
@@ -11,8 +12,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import static org.example.utils.configs.BrowserConfig.*;
 import static org.example.utils.configs.Constants.*;
 
 public final class BrowserContextManager {
@@ -26,13 +32,14 @@ public final class BrowserContextManager {
         if (Objects.isNull(BROWSER_CONTEXT_THREAD_LOCAL.get())) {
             LOGGER.info("Creating a new browser context.");
 
-            Browser.NewContextOptions _newContextOps = _getNewContextOptions();
+            BrowserContext _browserCtx;
 
-            _newContextOps = RECORD_VIDEO ? _enableVideoRecording(_newContextOps) : _newContextOps;
-            _newContextOps = PERSISTENT_LOGIN ? _enablePersistentData(_newContextOps) : _newContextOps;
+            _browserCtx = PERSISTENT_LOGIN ? _createPersistentContext() : _createNormalContext();
 
-            BrowserContext _browserCtx = BrowserManager.getBrowser().newContext(_newContextOps);
-            _enableTracing(_browserCtx);
+            if (ENABLE_TRACING) {
+                _enableTracing(_browserCtx);
+            }
+
             setBrowserContext(_browserCtx);
         }
         return BROWSER_CONTEXT_THREAD_LOCAL.get();
@@ -40,6 +47,21 @@ public final class BrowserContextManager {
 
     static void setBrowserContext(BrowserContext ctx) {
         BROWSER_CONTEXT_THREAD_LOCAL.set(ctx);
+    }
+
+    private static BrowserContext _createNormalContext() {
+        Browser.NewContextOptions _newContextOps = _getNewContextOptions();
+
+        _newContextOps = RECORD_VIDEO ? _enableVideoRecording(_newContextOps) : _newContextOps;
+        _newContextOps = STORE_AUTHENTICATION ? _setAuthenticationStorage(_newContextOps) : _newContextOps;
+
+        return BrowserManager.getBrowser().newContext(_newContextOps);
+    }
+
+    private static BrowserContext _createPersistentContext() {
+        LOGGER.info("Creating a persistent browser context.");
+        BrowserType.LaunchPersistentContextOptions _launchOptions = _getPersistentContextOptions();
+        return BrowserManager._getBrowserTypeObj(BROWSER).launchPersistentContext(Path.of(PERSISTENT_DIR), _launchOptions);
     }
 
     static void quit() {
@@ -62,27 +84,63 @@ public final class BrowserContextManager {
                 .setDeviceScaleFactor(1.0)
                 .setForcedColors(ForcedColors.NONE)
                 .setLocale("en-US")
-                .setRecordHarContent(HarContentPolicy.EMBED)
                 .setRecordHarMode(HarMode.FULL)
                 .setRecordHarPath(Path.of(HAR_PATH))
+                .setRecordHarContent(HarContentPolicy.EMBED)
                 .setStrictSelectors(false)
-                .setViewportSize(1920, 1080);
+                .setViewportSize(SCREEN_WIDTH, SCREEN_HEIGHT)
+                .setJavaScriptEnabled(true);
+    }
+
+    private static BrowserType.LaunchPersistentContextOptions _getPersistentContextOptions() {
+
+        Map<String, String> _map = new HashMap<>();
+        _map.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD);
+
+        BrowserType.LaunchPersistentContextOptions persistentContextOptions = new BrowserType.LaunchPersistentContextOptions()
+                .setEnv(_map)
+                .setDownloadsPath(Path.of(DOWNLOAD_PATH))
+                .setArgs(List.of(START_MAXIMIZED, START_FULLSCREEN, WINDOW_POSITION, WINDOW_SIZE, DISABLE_INFOBARS, DISABLE_NOTIFICATIONS))
+                .setHeadless(HEADLESS)
+                .setTracesDir(Path.of(TRACE_DIR))
+                .setTimeout(WAIT_TIMEOUT)
+                .setIgnoreDefaultArgs(List.of(ENABLE_AUTOMATION))
+                .setAcceptDownloads(true)
+                .setBaseURL(BASE_URL)
+                .setColorScheme(ColorScheme.NO_PREFERENCE)
+                .setDeviceScaleFactor(1.0)
+                .setForcedColors(ForcedColors.NONE)
+                .setLocale("en-US")
+                .setRecordHarMode(HarMode.FULL)
+                .setRecordHarPath(Path.of(HAR_PATH))
+                .setRecordHarContent(HarContentPolicy.EMBED)
+                .setStrictSelectors(false)
+                .setViewportSize(SCREEN_WIDTH, SCREEN_HEIGHT)
+                .setJavaScriptEnabled(true);
+
+        persistentContextOptions = RECORD_VIDEO ? _enableVideoRecording(persistentContextOptions) : persistentContextOptions;
+        return persistentContextOptions;
     }
 
     private static Browser.NewContextOptions _enableVideoRecording(Browser.NewContextOptions newContextOptions) {
         return newContextOptions.setRecordVideoDir(Path.of(VIDEO_DIR));
     }
 
-    private static Browser.NewContextOptions _enablePersistentData(Browser.NewContextOptions newContextOptions) {
-        return newContextOptions.setStorageStatePath(Path.of(PERSISTENT_DIR));
+    private static Browser.NewContextOptions _setAuthenticationStorage(Browser.NewContextOptions newContextOptions) {
+        return newContextOptions.setStorageStatePath(Paths.get("auth.json"));
     }
 
-    private static void _enableTracing(BrowserContext browserCtx) {
+    private static BrowserType.LaunchPersistentContextOptions _enableVideoRecording(BrowserType.LaunchPersistentContextOptions persistentContextOptions) {
+        return persistentContextOptions.setRecordVideoDir(Path.of(VIDEO_DIR));
+    }
+
+    private static BrowserContext _enableTracing(BrowserContext browserCtx) {
 
 //        System.setProperty("PLAYWRIGHT_JAVA_SRC", PROJECT_PATH);
         browserCtx.tracing().start(new Tracing.StartOptions()
                 .setScreenshots(true)
                 .setSnapshots(true)
                 .setSources(false));
+        return browserCtx;
     }
 }

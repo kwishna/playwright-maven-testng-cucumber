@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.example.utils.configs.Constants.PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD;
+
 public final class PlaywrightManager {
     private static final ThreadLocal<Playwright> PLAYWRIGHT_THREAD_LOCAL = ThreadLocal.withInitial(() -> null);
     private static final Logger LOGGER = LogManager.getLogger(PlaywrightManager.class);
@@ -20,7 +22,7 @@ public final class PlaywrightManager {
             LOGGER.info("Creating a playwright.");
 
             Map<String, String> _map = new HashMap<>();
-//            _map.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", "1");
+            _map.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD);
             
             Playwright.CreateOptions _cOps = new Playwright.CreateOptions();
             _cOps.setEnv(_map);

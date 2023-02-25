@@ -3,7 +3,10 @@ package org.example.browserManager;
 import com.microsoft.playwright.*;
 import org.example.utils.Utilities;
 
+import java.io.File;
 import java.nio.file.Path;
+
+import static org.example.utils.configs.Constants.TRACE_DIR;
 
 public final class DriverFactory {
     private DriverFactory() {
@@ -26,7 +29,7 @@ public final class DriverFactory {
     }
 
     public static void stopTracing() {
-        getContext().tracing().stop(new Tracing.StopOptions().setPath(Path.of(Utilities.timeStamp() + ".zip")));
+        getContext().tracing().stop(new Tracing.StopOptions().setPath(Path.of(TRACE_DIR + File.separator + "Trace_" + Utilities.timeStamp() + ".zip")));
     }
 
     public static void quit() {

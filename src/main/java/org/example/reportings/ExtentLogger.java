@@ -45,16 +45,24 @@ public final class ExtentLogger {
         ExtentManager.getExtentTest().info(message);
     }
 
-    public static void pass(String message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void warn(String message) {
+        ExtentManager.getExtentTest().warning(message);
+    }
+
+    public static void warn(Markup message) {
+        ExtentManager.getExtentTest().warning(message);
+    }
+
+    public static void pass(String message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().pass(message, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
         } else {
             pass(message);
         }
     }
 
-    public static void pass(Markup message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void pass(Markup message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().pass(MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
             ExtentManager.getExtentTest().pass(message);
         } else {
@@ -62,16 +70,16 @@ public final class ExtentLogger {
         }
     }
 
-    public static void fail(String message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void fail(String message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().fail(message, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
         } else {
             fail(message);
         }
     }
 
-    public static void fail(Markup message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void fail(Markup message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().fail(MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
             ExtentManager.getExtentTest().fail(message);
         } else {
@@ -79,20 +87,37 @@ public final class ExtentLogger {
         }
     }
 
-    public static void skip(String message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void skip(String message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().skip(message, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
         } else {
             skip(message);
         }
     }
 
-    public static void skip(Markup message, boolean isScreeshotNeeded) {
-        if (isScreeshotNeeded) {
+    public static void skip(Markup message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
             ExtentManager.getExtentTest().skip(MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
             ExtentManager.getExtentTest().skip(message);
         } else {
             skip(message);
+        }
+    }
+
+    public static void warn(String message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
+            ExtentManager.getExtentTest().warning(message, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
+        } else {
+            warn(message);
+        }
+    }
+
+    public static void warn(Markup message, boolean isScreenshotNeeded) {
+        if (isScreenshotNeeded) {
+            ExtentManager.getExtentTest().warning(MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotUtils.getScreenshotAsBase64()).build());
+            ExtentManager.getExtentTest().warning(message);
+        } else {
+            warn(message);
         }
     }
 
