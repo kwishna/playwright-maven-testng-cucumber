@@ -24,7 +24,7 @@ public final class PageManager {
         return PAGE_THREAD_LOCAL.get();
     }
 
-    public static void setPage(Page page) {
+    static void setPage(Page page) {
         PAGE_THREAD_LOCAL.set(page);
     }
 

@@ -5,6 +5,7 @@ import org.example.utils.Utilities;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Objects;
 
 import static org.example.utils.configs.Constants.TRACE_DIR;
 
@@ -22,6 +23,10 @@ public final class DriverFactory {
 
     public static Page getPage() {
         return PageManager.getPage();
+    }
+
+    public static void setPage(Page page) {
+        PageManager.setPage(Objects.requireNonNullElse(page, getPage()));
     }
 
     public static Playwright getPlaywright() {
