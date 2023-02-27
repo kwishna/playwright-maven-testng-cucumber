@@ -1,0 +1,19 @@
+# docker-compose-selenium.yml
+version: '3'
+
+services:
+  web:
+    image: mcr.microsoft.com/playwright:v1.28.0
+    env_file:
+      - .env
+    environment:
+      - DISPLAY=:0
+      - TEST_ENV=QA
+      - HEADLESS=false
+      - BROWSER=chrome
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+# cmd:// docker-compose run web npx -y playwright open google.com
+# cmd:// docker compose --env-file ./config/.env.dev up
+# cmd:// docker compose run -e DEBUG=1 web

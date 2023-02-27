@@ -24,14 +24,16 @@ public class BrowserManager {
 
     protected static Browser getBrowser() {
         if (Objects.isNull(BROWSER_THREAD_LOCAL.get())) {
-            LOGGER.info("Creating a new browser.");
+            LOGGER.info("Launching a new browser.");
             Browser _browser = _launchBrowser();
+            LOGGER.info("A new browser is launched.");
             setBrowser(_browser);
         }
         return BROWSER_THREAD_LOCAL.get();
     }
 
     protected static void setBrowser(Browser browser) {
+        LOGGER.info("Launched browser is set.");
         BROWSER_THREAD_LOCAL.set(browser);
     }
 
@@ -47,6 +49,7 @@ public class BrowserManager {
                 LOGGER.info("Closing the browser.");
                 BROWSER_THREAD_LOCAL.get().close();
                 BROWSER_THREAD_LOCAL.remove();
+                LOGGER.info("The browser is closed.");
             } catch (Exception err) {
                 LOGGER.error("Error while closing the browser: " + err);
             }
@@ -70,11 +73,12 @@ public class BrowserManager {
         return new BrowserType.LaunchOptions()
                 .setEnv(_map)
                 .setDownloadsPath(Path.of(DOWNLOAD_PATH))
-                .setArgs(List.of(START_MAXIMIZED, START_FULLSCREEN, WINDOW_POSITION, WINDOW_SIZE, DISABLE_INFOBARS, DISABLE_NOTIFICATIONS))
+//                .setArgs(List.of(START_MAXIMIZED, START_FULLSCREEN, WINDOW_POSITION, WINDOW_SIZE, DISABLE_INFOBARS, DISABLE_NOTIFICATIONS))
+                .setArgs(List.of(WINDOW_POSITION, WINDOW_SIZE))
                 .setHeadless(HEADLESS)
                 .setTracesDir(Path.of(TRACE_DIR))
-                .setTimeout(WAIT_TIMEOUT)
-                .setIgnoreDefaultArgs(List.of(ENABLE_AUTOMATION));
+                .setTimeout(WAIT_TIMEOUT);
+//                .setIgnoreDefaultArgs(List.of(ENABLE_AUTOMATION));
     }
 
     private static BrowserType.LaunchOptions _setBrowserExecutable(BrowserType.LaunchOptions _launchOptions) {

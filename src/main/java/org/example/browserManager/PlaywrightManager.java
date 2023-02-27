@@ -28,12 +28,14 @@ public final class PlaywrightManager {
             _cOps.setEnv(_map);
 
             Playwright pw = Playwright.create(_cOps);
+            LOGGER.info("A new playwright is created.");
             setPlaywright(pw);
         }
         return PLAYWRIGHT_THREAD_LOCAL.get();
     }
 
     private static void setPlaywright(Playwright pw) {
+        LOGGER.info("Setting a new playwright.");
         PLAYWRIGHT_THREAD_LOCAL.set(pw);
     }
 
@@ -43,6 +45,7 @@ public final class PlaywrightManager {
             try {
                 PLAYWRIGHT_THREAD_LOCAL.get().close();
                 PLAYWRIGHT_THREAD_LOCAL.remove();
+                LOGGER.info("The playwright is closed.");
             } catch (Exception err) {
                 LOGGER.info("Failed To Close playwright: " + err);
                 System.err.println(err.getMessage());

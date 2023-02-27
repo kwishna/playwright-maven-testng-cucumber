@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 import static org.example.browserManager.DriverFactory.getPage;
 
-public class DialogHandler {
+public class DialogAlertHandler {
 
     private static final ThreadLocal<Dialog> DIALOG_THREAD_LOCAL = ThreadLocal.withInitial(() -> null);
 
@@ -20,7 +20,7 @@ public class DialogHandler {
     }
 
     public static void registerDialogActionAlways() {
-        getPage().onDialog(DialogHandler::setDialog);
+        getPage().onDialog(DialogAlertHandler::setDialog);
     }
 
     public static void registerDialogActionOnce(Consumer<Dialog> dialogConsumer) {

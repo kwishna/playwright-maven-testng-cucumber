@@ -161,7 +161,6 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
-
                 </configuration>
                 <executions>
                     <execution>

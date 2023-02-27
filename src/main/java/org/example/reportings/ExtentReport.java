@@ -44,7 +44,7 @@ public final class ExtentReport {
         }
         ExtentManager.unload();
         try {
-            Desktop.getDesktop().browse(new File(EXTENT_REPORT_FOLDER_PATH + EXTENT_REPORT_NAME).toURI());
+            Desktop.getDesktop().browse(new File(EXTENT_REPORT_FOLDER_PATH + File.separator + EXTENT_REPORT_NAME).toURI());
         } catch (IOException e) {
             e.printStackTrace();
         }
