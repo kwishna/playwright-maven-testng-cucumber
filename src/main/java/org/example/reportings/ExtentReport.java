@@ -43,11 +43,11 @@ public final class ExtentReport {
             EXTENT.flush();
         }
         ExtentManager.unload();
-        try {
+        /*try {
             Desktop.getDesktop().browse(new File(EXTENT_REPORT_FOLDER_PATH + File.separator + EXTENT_REPORT_NAME).toURI());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void createTest(String testCaseName) {

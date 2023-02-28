@@ -1,19 +1,58 @@
 # docker-compose-selenium.yml
 version: '3'
-
 services:
   web:
-    image: mcr.microsoft.com/playwright:v1.28.0
+    image: mcr.microsoft.com/playwright/java:v1.30.0-focal
+    container_name: "microsoft-playwright"
+    shm_size: '2gb'
+#    shm_size: 2048
+#    ports:
+#      - "3000:3000"
     env_file:
       - .env
     environment:
-      - DISPLAY=:0
+#      - DISPLAY=:0
       - TEST_ENV=QA
       - HEADLESS=false
       - BROWSER=chrome
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /%CD%/output_data:/e2e/output_data
+    entrypoint: "/bin/bash"
+#    working_dir: "/e2e"
+#    depends_on:
+#      - any_other-service
 
 # cmd:// docker-compose run web npx -y playwright open google.com
 # cmd:// docker compose --env-file ./config/.env.dev up
 # cmd:// docker compose run -e DEBUG=1 web
+
+# docker run -it -v %PROJ%:/e2e -w /e2e f25862e8b27e
+
+# ----------- Sample Execution ----------
+# docker run -it -v /folder/folder/workspace/folder/folder:/tool-1.0/Projects/DemoProject/folder --name container imagename
+# docker run -it --name container imagename
+# docker cp ./ containerName:/e2e/
+# docker exec -it containerName /bin/bash
+
+# F:\ABD\GitHub\MavenPlaywrightTestNG>docker run -dit --rm f25862e8b27e
+# 3ec3d6da14b1df18c2f0f68193aef0f0412c606fe79b152af0b33396e5da788a
+
+# F:\ABD\GitHub\MavenPlaywrightTestNG>docker ps
+# CONTAINER ID   IMAGE          COMMAND   CREATED          STATUS          PORTS     NAMES
+# 3ec3d6da14b1   f25862e8b27e   "bash"    47 seconds ago   Up 43 seconds             objective_cray
+
+# F:\ABD\GitHub\MavenPlaywrightTestNG>docker cp ./ objective_cray:/e2e/
+
+# F:\ABD\GitHub\MavenPlaywrightTestNG>docker exec -it 3ec3d6da14b1 /bin/bash
+
+# root@3ec3d6da14b1:/# ls
+# bin   dev  etc   lib    lib64   media  ms-playwright  proc  run   srv  tmp  var
+# boot  e2e  home  lib32  libx32  mnt    opt            root  sbin  sys  usr
+
+# root@3ec3d6da14b1:/# cd e2e
+
+# root@3ec3d6da14b1:/e2e# ls
+# Dockerfile         config.properties              docker-compose-selenium.yml  pom.xml     runner.sh  testng.xml
+# ExtentReports.zip  docker-compose-playwright.yml  output_data                  runner.bat  src
+
+# root@3ec3d6da14b1:/e2e# mvn verify -DBROWSER=chrome -DHEADLESS=true
