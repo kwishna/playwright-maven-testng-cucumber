@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import static org.example.browserManager.DriverFactory.getContext;
 import static org.example.browserManager.DriverFactory.getPage;
 import static org.example.utils.configs.Constants.WAIT_TIMEOUT;
 
@@ -719,6 +720,14 @@ public abstract class Actions {
 //        return this.explicitWait(getLocator(locator), strategy);
 //    }
 
+    public Locator getVisible(String locator) {
+        return this.getVisible(getLocator(locator));
+    }
+
+    public Locator getVisible(Locator locator) {
+        return locator.locator("visible=true");
+    }
+
     public Locator getLocator(String _locator) {
         return getPage().locator(_locator);
     }
@@ -735,8 +744,16 @@ public abstract class Actions {
         return _locator.locator("nth=" + nth);
     }
 
+    public Locator getLocatorAtIndex(String _locator, int nth) {
+        return this.getLocatorAtIndex(getLocator(_locator), nth);
+    }
+
+    public Locator getLocatorAtIndex(Locator _locator, int nth) {
+        return _locator.nth(nth);
+    }
+
     public Locator getLastLocator(Locator _locator) {
-        return _locator.locator("nth=-1");
+        return this.getIndexedLocator(_locator, -1);
     }
 
     public Locator getVisibleLocator(Locator _locator) {
@@ -787,14 +804,28 @@ public abstract class Actions {
         return getPage().getByTitle(text);
     }
 
-    public boolean pageWait(double timeout) {
-        try {
-            getPage().waitForTimeout(timeout);
-            return true;
-        } catch (PlaywrightException e) {
-            ExtentLogger.fail(e.getMessage());
-            return false;
-        }
+    public Locator withChild(String parent, String child) {
+        return getLocator(parent).filter(new Locator.FilterOptions().setHas(getLocator(child)));
+    }
+
+    public Locator withText(String parent, String text) {
+        return getLocator(parent).filter(new Locator.FilterOptions().setHasText(text));
+    }
+
+    public Locator withText(String parent, Pattern text) {
+        return getLocator(parent).filter(new Locator.FilterOptions().setHasText(text));
+    }
+
+    public Locator withChild(Locator parent, Locator child) {
+        return parent.filter(new Locator.FilterOptions().setHas(child));
+    }
+
+    public Locator withText(Locator parent, String text) {
+        return parent.filter(new Locator.FilterOptions().setHasText(text));
+    }
+
+    public Locator withText(Locator parent, Pattern text) {
+        return parent.filter(new Locator.FilterOptions().setHasText(text));
     }
 
     public Locator explicitWait(Locator locator, WaitStrategy.LocatorStrategy strategy) {
@@ -814,6 +845,16 @@ public abstract class Actions {
             ExtentLogger.fail(e.getMessage());
         }
         return locator;
+    }
+
+    public boolean pageWait(double timeout) {
+        try {
+            getPage().waitForTimeout(timeout);
+            return true;
+        } catch (PlaywrightException e) {
+            ExtentLogger.fail(e.getMessage());
+            return false;
+        }
     }
 
 //    public boolean sendKeyboardKeys(String locator, String key) {
@@ -972,6 +1013,10 @@ public abstract class Actions {
             ExtentLogger.fail(e.getMessage());
             return "";
         }
+    }
+
+    public int getAllPagesCount() {
+        return getContext().pages().size();
     }
 
     public boolean focus(String locator) {

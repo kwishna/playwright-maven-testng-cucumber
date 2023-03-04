@@ -1,10 +1,13 @@
 package org.example.browserManager;
 
+import com.google.gson.JsonObject;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +82,46 @@ public class BrowserManager {
                 .setTracesDir(Path.of(TRACE_DIR))
                 .setTimeout(WAIT_TIMEOUT);
 //                .setIgnoreDefaultArgs(List.of(ENABLE_AUTOMATION));
+    }
+
+    private static Browser _createRemoteBrowser() {
+
+        LOGGER.info("Creating a persistent browser context.");
+
+        JsonObject capabilitiesObject = new JsonObject();
+        capabilitiesObject.addProperty("browser", "chrome");    // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+        capabilitiesObject.addProperty("browser_version", "latest");
+        capabilitiesObject.addProperty("os", "osx");
+        capabilitiesObject.addProperty("os_version", "catalina");
+        capabilitiesObject.addProperty("name", "Playwright first single test");
+        capabilitiesObject.addProperty("build", "playwright-java-1");
+        capabilitiesObject.addProperty("buildTag", "smoke");
+        capabilitiesObject.addProperty("browserstack.username", "BROWSERSTACK_USERNAME");
+        capabilitiesObject.addProperty("browserstack.accessKey", "BROWSERSTACK_ACCESS_KEY");
+        capabilitiesObject.addProperty("browserstack.debug", "true");
+        capabilitiesObject.addProperty("browserstack.networkLogs", "true");
+        capabilitiesObject.addProperty("browserstack.console", "disable");
+        capabilitiesObject.addProperty("browserstack.local", "false");
+        capabilitiesObject.addProperty("browserstack.playwrightLogs", "true");
+        capabilitiesObject.addProperty("browserstack.geoLocation", "FR");
+        capabilitiesObject.addProperty("resolution", "1024x768");
+        capabilitiesObject.addProperty("browserstack.maskCommands", "sendType, sendPress, setHTTPCredentials, setStorageState, setGeolocation");
+        capabilitiesObject.addProperty("client.playwrightVersion", "1.31.0");
+
+        HashMap<String, Boolean> networkLogsOptions = new HashMap<>();
+        networkLogsOptions.put("captureContent", true);
+//        caps.setCapability("browserstack.networkLogs", true);
+//        caps.setCapability("browserstack.networkLogsOptions", networkLogsOptions);
+
+        String caps = URLEncoder.encode(capabilitiesObject.toString(), StandardCharsets.UTF_8);
+        String ws_endpoint = "wss://cdp.browserstack.com/playwright?caps=" + caps;
+
+        return BrowserManager._getBrowserTypeObj(BROWSER).connect(ws_endpoint);
+    }
+
+    private static Browser _createCdpBrowser(String cdpUrl) {
+        LOGGER.info("Creating a persistent browser context.");
+        return BrowserManager._getBrowserTypeObj(BROWSER).connectOverCDP(cdpUrl);
     }
 
     private static BrowserType.LaunchOptions _setBrowserExecutable(BrowserType.LaunchOptions _launchOptions) {

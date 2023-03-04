@@ -4,10 +4,6 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Tracing;
-import com.microsoft.playwright.options.ColorScheme;
-import com.microsoft.playwright.options.ForcedColors;
-import com.microsoft.playwright.options.HarContentPolicy;
-import com.microsoft.playwright.options.HarMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

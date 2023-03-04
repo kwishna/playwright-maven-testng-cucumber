@@ -35,6 +35,7 @@ public interface Constants {
     String PROJECT_NAME = System.getProperty("PROJECT_NAME", "PROJECT_NAME");
     String TEST_ENV = System.getProperty("TEST_ENV", "QA");
     String BROWSER = System.getProperty("BROWSER", "chrome");
+    boolean REMOTE = Boolean.parseBoolean(System.getProperty("REMOTE", "false"));
     boolean HEADLESS = Boolean.parseBoolean(System.getProperty("HEADLESS", "false"));
     boolean SEND_MAIL = Boolean.parseBoolean(System.getProperty("SEND_MAIL", "false"));
     boolean RECORD_VIDEO = Boolean.parseBoolean(System.getProperty("RECORD_VIDEO", "false"));
@@ -43,6 +44,7 @@ public interface Constants {
     boolean BROWSER_EXECUTABLE = Boolean.parseBoolean(System.getProperty("BROWSER_EXECUTABLE", "false"));
     boolean ENABLE_TRACING = Boolean.parseBoolean(System.getProperty("ENABLE_TRACING", "true"));
     String BASE_URL = System.getProperty("BASE_URL", "https://google.com/");
+    String REMOTE_CONNECTION_URL = System.getProperty("REMOTE_CONNECTION_URL", "");
     String OUTPUT_FOLDER = "output_data";
     String EXTENT_REPORT_FOLDER_PATH = PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "extent-reports";
     String DOWNLOAD_PATH = System.getProperty("DOWNLOAD_PATH", PROJECT_PATH + File.separator + OUTPUT_FOLDER + File.separator + "downloads");

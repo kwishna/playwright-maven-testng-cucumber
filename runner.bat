@@ -40,6 +40,8 @@ echo mvn clean verify -DBROWSER=%BROWSER% -DHEADLESS=%HEADLESS% -DTEST_ENV=%TEST
 CALL mvn clean verify -DBROWSER=%BROWSER% -DHEADLESS=%HEADLESS% -DTEST_ENV=%TEST_ENV% -DTIMEOUT_WAIT=%TIMEOUT_WAIT% -DSEND_MAIL=%SEND_MAIL% -DPROJECT_NAME=%PROJECT_NAME% -DBASE_URL=%BASE_URL% -DSEND_MAIL=%SEND_MAIL% -DDOWNLOAD_PATH=%DOWNLOAD_PATH% -DSCREENSHOT_PATH=%SCREENSHOT_PATH% -DTRACE_DIR=%TRACE_DIR% -DHAR_PATH=%HAR_PATH% -DVIDEO_DIR=%VIDEO_DIR% -DPERSISTENT_LOGIN=%PERSISTENT_LOGIN% -DPERSISTENT_DIR=%PERSISTENT_DIR% -DRECORD_VIDEO=%RECORD_VIDEO% -DSTORE_AUTHENTICATION=%STORE_AUTHENTICATION% -DENABLE_TRACING=%ENABLE_TRACING% -DBROWSER_EXECUTABLE=%BROWSER_EXECUTABLE%
 
 :: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen demo.playwright.dev/todomvc"
+:: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen --save-storage=auth.json" --timezone="Europe/Rome"  --geolocation="41.890221,12.492348" --lang="it-IT" --device="iPhone 11" --color-scheme=dark --viewport-size=800,600 playwright.dev"
+:: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="open --load-storage=auth.json github.com/microsoft/playwright"
 :: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="show-trace trace.zip"
 :: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install msedge"
 :: set PLAYWRIGHT_BROWSERS_PATH=%USERPROFILE%\pw-browsers
