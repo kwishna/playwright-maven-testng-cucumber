@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class GoogleTest extends BaseTest {
 
-    Logger logger = LogManager.getLogger(BaseTest.class);
+    Logger logger = LogManager.getLogger(GoogleTest.class);
 
     @Test
     public void homePageTest() {

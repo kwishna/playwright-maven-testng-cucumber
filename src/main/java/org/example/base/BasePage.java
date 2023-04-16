@@ -25,18 +25,18 @@ import static org.example.utils.configs.Constants.WAIT_TIMEOUT;
 
 public class BasePage extends Actions {
     Logger logger = LogManager.getLogger(GooglePage.class);
-    private Page page;
+//    private Page page;
 
 //    private BasePage(Page _page) {
 //        this.page = _page;
 //    }
 
-    protected BasePage() {
-        this.page = DriverFactory.getPage();
-    }
+//    protected BasePage() {
+//        this.page = DriverFactory.getPage();
+//    }
 
     protected Page getPage() {
-        return this.page;
+        return DriverFactory.getPage();
     }
 
 //    protected void setPage(Page page) {

@@ -28,16 +28,14 @@ import org.example.pages.PlaywrightPage;
 
 public class PlaywrightsSteps {
 
-    Page page;
-
     @Given("User navigates To URL: {string}")
     public void user_navigates_to_url(String url) {
-        new PlaywrightPage(page).openUrl(url);
+        new PlaywrightPage().openUrl(url);
     }
 
     @And("User clicks on 'Slow calculator'")
     public void userClicksOnSlowCalculator() {
-        new PlaywrightPage(page).clickSlowCalculator();
+        new PlaywrightPage().clickSlowCalculator();
     }
 
     @Then("User quits The Browser")
@@ -47,31 +45,31 @@ public class PlaywrightsSteps {
 
     @And("User takes screenshot of 'Calculator' element")
     public void userTakesScreenshotOfCalculatorElement() {
-        new PlaywrightPage(page).userTakesScreenshotOfCalculatorElement();
+        new PlaywrightPage().userTakesScreenshotOfCalculatorElement();
     }
 
     @And("User opens {string} in a new window")
     public void userOpensANewWindowOnTheBrowser(String url) {
-        new PlaywrightPage(page).userOpensWindowOnTheBrowser(url);
+        new PlaywrightPage().userOpensWindowOnTheBrowser(url);
     }
 
     @And("User opens {string} in a new tab")
     public void userOpensANewTabOnTheBrowser(String url) {
-        new PlaywrightPage(page).userOpensTabOnTheBrowser(url);
+        new PlaywrightPage().userOpensTabOnTheBrowser(url);
     }
 
     @And("User verify total tabs opened are: {int}")
     public void userVerifyTotalTabsOpenedAre(int num) {
-        new PlaywrightPage(page).userVerifyTotalTabsOpenedAre(num);
+        new PlaywrightPage().userVerifyTotalTabsOpenedAre(num);
     }
 
     @And("User print the location of the object")
     public void userPrintTheLocationOfTheObject() {
-        new PlaywrightPage(page).userPrintTheLocationOfTheObject();
+        new PlaywrightPage().userPrintTheLocationOfTheObject();
     }
 
     @And("Login using relative locators")
     public void loginUsingRelativeLocators() {
-        new PlaywrightPage(page).loginUsingRelativeLocators();
+        new PlaywrightPage().loginUsingRelativeLocators();
     }
 }
