@@ -8,12 +8,10 @@ import com.microsoft.playwright.options.ScreenshotType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.browserManager.DriverFactory;
+import org.example.listeners.ListenerClass;
 import org.example.utils.data.PropertyReader;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +22,13 @@ import java.util.Base64;
 import static org.example.utils.configs.Constants.SCREENSHOT_PATH;
 import static org.example.utils.configs.Constants.WAIT_TIMEOUT;
 
+@Listeners({ListenerClass.class})
 public class BaseTest {
 
     Logger logger = LogManager.getLogger(BasePage.class);
 
     public BaseTest() {
-        PropertyReader.loadAsSystemProperties(Paths.get(System.getProperty("user.dir")+"/config.properties"));
+//        PropertyReader.loadAsSystemProperties(Paths.get(System.getProperty("user.dir") + "/config.properties")); // Loading From pom.xml
     }
 
     protected Page getPage() {
@@ -38,7 +37,7 @@ public class BaseTest {
 
     @Parameters("browser")
     @BeforeTest
-    public synchronized void startDriver(@Optional String browser) {
+    public synchronized void startDriver(@Optional("chrome") String browser) {
         logger.info("Starting Driver");
         getPage();
         logger.info("Current Thread info = " + Thread.currentThread().getId() + ", Driver = " + getPage());
@@ -46,7 +45,7 @@ public class BaseTest {
 
     @Parameters("browser")
     @AfterTest
-    public synchronized void quitDriver(@Optional String browser) {
+    public synchronized void quitDriver(@Optional("chrome") String browser) {
         logger.info("Quitting Driver");
         DriverFactory.quit();
     }
@@ -55,11 +54,11 @@ public class BaseTest {
         logger.info("Current Thread info = " + Thread.currentThread().getId() + ", Driver = " + getPage());
         if (result.getStatus() == ITestResult.FAILURE) {
             File destFile = new File("Screenshots" + File.separator + browser + File.separator + result.getTestClass().getRealClass().getSimpleName() + "_" + result.getMethod().getMethodName() + ".png");
-            takeScreenshot(destFile);
+            takeScreenshot();
         }
     }
 
-    private String takeScreenshot(File destFile) {
+    private String takeScreenshot() {
 
         Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
         screenshotOptions.setAnimations(ScreenshotAnimations.ALLOW);

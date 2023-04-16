@@ -36,6 +36,7 @@ public interface Constants {
     String TEST_ENV = System.getProperty("TEST_ENV", "QA");
     String BROWSER = System.getProperty("BROWSER", "chrome");
     boolean REMOTE = Boolean.parseBoolean(System.getProperty("REMOTE", "false"));
+    boolean RETRY_FAILED_TESTS = Boolean.parseBoolean(System.getProperty("RETRY_FAILED_TESTS", "false"));
     boolean HEADLESS = Boolean.parseBoolean(System.getProperty("HEADLESS", "false"));
     boolean SEND_MAIL = Boolean.parseBoolean(System.getProperty("SEND_MAIL", "false"));
     boolean RECORD_VIDEO = Boolean.parseBoolean(System.getProperty("RECORD_VIDEO", "false"));
