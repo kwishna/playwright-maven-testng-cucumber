@@ -16,10 +16,6 @@ public class GooglePage extends BasePage {
     private Locator searchBtns = this.getPage().locator("[name='btnK']");
     private Locator results = this.getPage().locator("div.g a h3");
 
-    public GooglePage(Page driver) {
-        super(driver);
-    }
-
     public void navigate() {
         logger.info("Navigating To Google GooglePage");
         this.navigateTo("https://google.com/");

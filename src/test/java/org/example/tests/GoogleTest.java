@@ -18,7 +18,7 @@ public class GoogleTest extends BaseTest {
     public void homePageTest() {
         System.out.println("EMAIL_TO: " + System.getProperty("EMAIL_TO"));
         logger.info("Home Page Navigation");
-        GooglePage _googlePg = new GooglePage(getPage());
+        GooglePage _googlePg = new GooglePage();
         _googlePg.navigate();
         Assertions.assertTrue(_googlePg.isSearchPageOpen(), "Search Page Is Not Opened.");
         _googlePg.performSearch("2047");
@@ -33,22 +33,7 @@ public class GoogleTest extends BaseTest {
     public void homePageTest1() {
         System.out.println("EMAIL_TO: " + System.getProperty("EMAIL_TO"));
         logger.info("Home Page Navigation");
-        GooglePage _googlePg = new GooglePage(getPage());
-        _googlePg.navigate();
-        Assertions.assertTrue(_googlePg.isSearchPageOpen(), "Search Page Is Not Opened.");
-        _googlePg.performSearch("2047");
-        Assertions.assertTrue(_googlePg.isResultPageLoaded(), "Result Page Is Not Opened.");
-        Assertions.matches(_googlePg.getResultCount(), is(greaterThanOrEqualTo(5)));
-        _googlePg.navigateToFirstLink();
-        System.out.println(_googlePg.getPageTitle());
-        System.out.println(_googlePg.getCurrentUrl());
-    }
-
-    @Test
-    public void homePageTest2() {
-        System.out.println("EMAIL_TO: " + System.getProperty("EMAIL_TO"));
-        logger.info("Home Page Navigation");
-        GooglePage _googlePg = new GooglePage(getPage());
+        GooglePage _googlePg = new GooglePage();
         _googlePg.navigate();
         Assertions.assertTrue(_googlePg.isSearchPageOpen(), "Search Page Is Not Opened.");
         _googlePg.performSearch("2047");

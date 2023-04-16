@@ -61,7 +61,7 @@ public class ListenerClass implements ITestListener, ISuiteListener {
 
         LOGGER.info(methodName + " started!");
 
-        ExtentReport.initReports();
+//        ExtentReport.initReports();
         ExtentReport.createTest(result.getMethod().getMethodName(), result.getMethod().getDescription());
 
         ExtentReport.addCategories(result.getTestContext().getSuite().getName());
@@ -78,7 +78,7 @@ public class ListenerClass implements ITestListener, ISuiteListener {
         Markup markup_message = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
         ExtentLogger.pass(markup_message, true);
         ExtentLogger.setEndTime(result);
-        ExtentReport.flushReports();
+//        ExtentReport.flushReports();
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ListenerClass implements ITestListener, ISuiteListener {
         Markup markup_message = MarkupHelper.createLabel(logText, ExtentColor.RED);
         ExtentLogger.fail(markup_message, true);
         ExtentLogger.setEndTime(result);
-        ExtentReport.flushReports();
+//        ExtentReport.flushReports();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ListenerClass implements ITestListener, ISuiteListener {
         Markup markup_message = MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
         ExtentLogger.skip(markup_message, true);
         ExtentLogger.setEndTime(result);
-        ExtentReport.flushReports();
+//        ExtentReport.flushReports();
     }
 
     @Override

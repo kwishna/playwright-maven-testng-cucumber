@@ -31,48 +31,23 @@ public class BaseTest {
 //        PropertyReader.loadAsSystemProperties(Paths.get(System.getProperty("user.dir") + "/config.properties")); // Loading From pom.xml
     }
 
-    protected Page getPage() {
-        return DriverFactory.getPage();
-    }
+//    protected Page getPage() {
+//        return DriverFactory.getPage();
+//    }
 
     @Parameters("browser")
     @BeforeTest
     public synchronized void startDriver(@Optional("chrome") String browser) {
         logger.info("Starting Driver");
-        getPage();
-        logger.info("Current Thread info = " + Thread.currentThread().getId() + ", Driver = " + getPage());
+//        getPage();
+//        logger.info("Current Thread info = " + Thread.currentThread().getId() + ", Driver = " + getPage());
+        logger.info("Current Thread info = " + Thread.currentThread().threadId());
     }
 
     @Parameters("browser")
     @AfterTest
     public synchronized void quitDriver(@Optional("chrome") String browser) {
         logger.info("Quitting Driver");
-        DriverFactory.quit();
-    }
-
-    private void takeScreenshotOnTestFailure(String browser, ITestResult result) throws IOException {
-        logger.info("Current Thread info = " + Thread.currentThread().getId() + ", Driver = " + getPage());
-        if (result.getStatus() == ITestResult.FAILURE) {
-            File destFile = new File("Screenshots" + File.separator + browser + File.separator + result.getTestClass().getRealClass().getSimpleName() + "_" + result.getMethod().getMethodName() + ".png");
-            takeScreenshot();
-        }
-    }
-
-    private String takeScreenshot() {
-
-        Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
-        screenshotOptions.setAnimations(ScreenshotAnimations.ALLOW);
-        screenshotOptions.setCaret(ScreenshotCaret.INITIAL);
-        screenshotOptions.setFullPage(true);
-        screenshotOptions.setOmitBackground(false);
-        screenshotOptions.setQuality(100);
-        screenshotOptions.setScale(ScreenshotScale.DEVICE);
-        screenshotOptions.setType(ScreenshotType.PNG);
-        screenshotOptions.setTimeout(WAIT_TIMEOUT);
-        screenshotOptions.setPath(Path.of(SCREENSHOT_PATH, String.valueOf(System.currentTimeMillis()), ".png"));
-
-        byte[] srcFile = getPage().screenshot(screenshotOptions);
-
-        return Base64.getEncoder().encodeToString(srcFile);
+//        DriverFactory.quit();
     }
 }
